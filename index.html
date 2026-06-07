@@ -193,7 +193,195 @@
             .header-title { font-size: 1.3rem; }
         }
 
-        /* 通用卡片样式 */
+        /* ========= 移动端专用优化 (≤768px) ========= */
+        @media (max-width: 768px) {
+            /* 隐藏桌面光标特效 */
+            .custom-cursor { display: none !important; }
+            canvas#starCanvas { opacity: 0.25; }
+
+            body {
+                padding: 12px;
+                font-size: 15px;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            /* 头部垂直堆叠 */
+            .app-header {
+                flex-direction: column;
+                gap: 12px;
+                padding: 14px 18px;
+                top: 8px;
+                border-radius: 20px;
+            }
+
+            .header-brand { gap: 10px; }
+            .header-logo { width: 40px; height: 40px; font-size: 24px; border-radius: 16px; }
+            .header-title { font-size: 1.15rem; white-space: nowrap; }
+
+            .nav-buttons {
+                width: 100%;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .nav-btn {
+                padding: 10px 20px;
+                font-size: 0.82rem;
+                border-radius: 50px;
+                white-space: nowrap;
+            }
+
+            .settings-icon {
+                padding: 10px 18px;
+                font-size: 0.82rem;
+                flex-shrink: 0;
+            }
+
+            /* 主网格已由 1100px 媒体查询设为单列，补充移动间距 */
+            .main-grid { gap: 16px; }
+
+            /* 卡片紧凑 */
+            .card {
+                padding: 20px 18px;
+                border-radius: 20px;
+            }
+
+            .card-header {
+                font-size: 0.78rem;
+                letter-spacing: 1.5px;
+                margin-bottom: 16px;
+            }
+
+            /* 输入框 - 44px min touch target */
+            .input-field, .textarea-field {
+                padding: 16px 18px;
+                font-size: 16px;          /* 防止 iOS 缩放 */
+                border-radius: 16px;
+                min-height: 54px;
+            }
+
+            .textarea-field {
+                min-height: 100px;
+                font-size: 16px;
+            }
+
+            label {
+                font-size: 0.85rem;
+                margin-bottom: 6px;
+            }
+
+            /* 比例按钮 - 两行四列网格 */
+            .ratio-group, .template-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 8px;
+            }
+
+            .ratio-btn, .template-btn {
+                padding: 12px 6px;
+                font-size: 0.78rem;
+                text-align: center;
+                border-radius: 50px;
+                min-height: 44px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            /* 生成按钮 */
+            .btn-generate {
+                padding: 18px;
+                font-size: 1.1rem;
+                border-radius: 60px;
+                min-height: 56px;
+                margin-top: 20px;
+            }
+
+            /* 上传区域 */
+            .upload-zone {
+                padding: 28px 16px;
+                border-radius: 20px;
+                font-size: 0.9rem;
+            }
+
+            /* 滑块 */
+            .slider-group input { min-height: 32px; }
+
+            /* 右侧作品区单列 */
+            .result-gallery {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .result-card { border-radius: 20px; }
+
+            .result-card img {
+                aspect-ratio: auto;
+                max-height: 360px;
+            }
+
+            .result-actions { gap: 12px; }
+            .small-btn {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+                min-height: 36px;
+            }
+
+            /* 历史页单列 */
+            .history-gallery {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-height: none;
+                padding: 4px 0;
+            }
+
+            .history-card { border-radius: 22px; }
+            .history-img { max-height: 340px; aspect-ratio: auto; }
+
+            .history-info { padding: 14px; }
+            .history-prompt-preview { font-size: 0.85rem; }
+
+            .history-actions { gap: 10px; }
+            .hist-btn {
+                padding: 8px 16px;
+                font-size: 0.78rem;
+                min-height: 36px;
+            }
+
+            /* 设置面板全屏 */
+            .settings-panel {
+                width: 100%;
+                left: 0;
+                right: 0;
+                border-left: none;
+                border-radius: 0;
+                padding: 24px 20px;
+            }
+
+            .settings-panel.open { transform: translateX(0); }
+
+            /* Modal 弹窗适配 */
+            .modal img {
+                max-width: 95vw;
+                max-height: 85vh;
+                border-radius: 20px;
+            }
+
+            /* Toast 适配 */
+            .toast {
+                bottom: 24px;
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            /* 右侧最新作品区 */
+            .latest-area {
+                padding: 18px;
+                border-radius: 20px;
+            }
+
+            .section-title { font-size: 0.95rem; margin-bottom: 14px; }
+        }
         .card {
             background: rgba(15, 20, 32, 0.75);
             backdrop-filter: blur(24px);
