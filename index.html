@@ -761,9 +761,165 @@
         input:focus, textarea:focus {
             caret-color: var(--accent);
         }
+
+        /* ========= 登录覆盖层 ========= */
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: radial-gradient(ellipse at 50% 35%, #0f172a 0%, #02040c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
+        }
+        .login-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .login-card {
+            width: 420px;
+            max-width: 90vw;
+            background: rgba(15, 20, 35, 0.85);
+            backdrop-filter: blur(40px);
+            border: 1px solid rgba(123, 142, 255, 0.18);
+            border-radius: 28px;
+            padding: 44px 40px;
+            box-shadow: 0 0 80px rgba(123, 142, 255, 0.08), 0 24px 60px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: loginCardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes loginCardIn {
+            from { opacity: 0; transform: translateY(30px) scale(0.95); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .login-card.shake {
+            animation: loginShake 0.5s ease;
+        }
+        @keyframes loginShake {
+            0%,100% { transform: translateX(0); }
+            15% { transform: translateX(-8px); }
+            30% { transform: translateX(8px); }
+            45% { transform: translateX(-6px); }
+            60% { transform: translateX(6px); }
+            75% { transform: translateX(-3px); }
+            90% { transform: translateX(3px); }
+        }
+
+        .login-logo {
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #7b8eff, #b77cff);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            box-shadow: 0 16px 40px rgba(123, 142, 255, 0.35);
+        }
+        .login-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            background: linear-gradient(120deg, #ffffff, #c7d0ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 6px;
+        }
+        .login-subtitle {
+            font-size: 0.8rem;
+            color: #6e7695;
+            margin-bottom: 32px;
+            letter-spacing: 1px;
+        }
+
+        .login-field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 14px;
+            color: #f0f3ff;
+            font-size: 0.95rem;
+            font-family: inherit;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .login-field:focus {
+            border-color: #7b8eff;
+            box-shadow: 0 0 0 3px rgba(123, 142, 255, 0.12);
+        }
+        .login-field.error {
+            border-color: #ff9c8a;
+            box-shadow: 0 0 0 3px rgba(255, 156, 138, 0.12);
+        }
+        .login-field::placeholder {
+            color: #4a5070;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(105deg, #7b8eff, #b267ff);
+            border: none;
+            padding: 14px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
+            color: white;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.2s;
+            box-shadow: 0 8px 20px rgba(123, 142, 255, 0.35);
+        }
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(123, 142, 255, 0.5);
+        }
+        .login-btn:active {
+            transform: scale(0.97);
+        }
+
+        .login-error {
+            color: #ff9c8a;
+            font-size: 0.8rem;
+            min-height: 20px;
+            margin-bottom: 4px;
+            transition: opacity 0.2s;
+        }
+
+        /* 移动端登录适配 */
+        @media (max-width: 768px) {
+            .login-card {
+                padding: 36px 24px;
+                border-radius: 24px;
+            }
+            .login-logo { width: 60px; height: 60px; font-size: 30px; border-radius: 20px; }
+            .login-title { font-size: 1.3rem; }
+            .login-field { padding: 16px 18px; font-size: 16px; border-radius: 14px; }
+            .login-btn { padding: 16px; font-size: 1.05rem; }
+        }
     </style>
 </head>
 <body>
+
+<!-- 登录覆盖层 -->
+<div class="login-overlay" id="loginOverlay">
+    <div class="login-card" id="loginCard">
+        <div class="login-logo">✨</div>
+        <div class="login-title">guanlan vision</div>
+        <div class="login-subtitle">双 生 幻 境  ·  私 有 入 口</div>
+        <input type="text" class="login-field" id="loginAccount" placeholder="账号" autocomplete="username" enterkeyhint="next">
+        <input type="password" class="login-field" id="loginPassword" placeholder="密码" autocomplete="current-password" enterkeyhint="done">
+        <div class="login-error" id="loginError"></div>
+        <button class="login-btn" id="loginBtn">进入工坊</button>
+    </div>
+</div>
+
 <canvas id="starCanvas"></canvas>
 <div class="custom-cursor" id="customCursor"></div>
 
@@ -895,6 +1051,64 @@
 <div id="modalOverlay" class="modal"><img id="modalImage"></div>
 
 <script>
+    // ========== 登录鉴权 ==========
+    (function() {
+        const VALID_ACCOUNT = 'admin';
+        const VALID_PASSWORD = 'guanlan2026';
+        const overlay = document.getElementById('loginOverlay');
+        const card = document.getElementById('loginCard');
+        const accountInput = document.getElementById('loginAccount');
+        const passwordInput = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const errorEl = document.getElementById('loginError');
+
+        // 已登录则直接跳过
+        if (sessionStorage.getItem('guanlan_auth') === '1') {
+            overlay.classList.add('hidden');
+            return;
+        }
+
+        function showError(msg) {
+            errorEl.textContent = msg;
+            card.classList.add('shake');
+            accountInput.classList.add('error');
+            passwordInput.classList.add('error');
+            setTimeout(() => {
+                card.classList.remove('shake');
+                accountInput.classList.remove('error');
+                passwordInput.classList.remove('error');
+            }, 500);
+        }
+
+        function doLogin() {
+            const acc = accountInput.value.trim();
+            const pwd = passwordInput.value;
+            if (!acc || !pwd) {
+                showError('请输入账号和密码');
+                return;
+            }
+            if (acc !== VALID_ACCOUNT || pwd !== VALID_PASSWORD) {
+                showError('账号或密码错误');
+                passwordInput.value = '';
+                passwordInput.focus();
+                return;
+            }
+            sessionStorage.setItem('guanlan_auth', '1');
+            overlay.classList.add('hidden');
+        }
+
+        loginBtn.addEventListener('click', doLogin);
+        passwordInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') doLogin();
+        });
+        accountInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') passwordInput.focus();
+        });
+
+        // 自动聚焦
+        setTimeout(() => accountInput.focus(), 500);
+    })();
+
     (function() {
         // DOM 元素
         const promptInput = document.getElementById('promptInput');
